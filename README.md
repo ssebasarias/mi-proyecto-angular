@@ -84,3 +84,74 @@
         * **Ubicación de la API:** (Déjalo en blanco si no tienes una API)
         * **Ubicación del artefacto de la aplicación:** `dist/mi-proyecto-angular/browser`
     8.  **Pestaña "Revisar + crear":** Revisa la configuración y haz clic en **"Crear"**.
+
+
+# 🧠 Documentación del Proceso en Azure Machine Learning – Clasificación Automatizada
+
+## 🔹 1. Creación del recurso de Azure Machine Learning
+
+1. Ingresé al portal de [Azure](https://portal.azure.com).
+2. Busqué **“Machine Learning”** y seleccioné la opción **"Crear"**.
+3. Completé los campos básicos:
+   - **Nombre del recurso**: _(Nombre personalizado)_
+   - **Grupo de recursos**: _(Nombre del grupo existente o nuevo)_
+   - **Tipo de plan**: _Gratis (Free Tier)_
+   - Dejé el resto de opciones con su configuración predeterminada.
+4. Una vez creado el recurso, ingresé a él y seleccioné **“Launch Studio”** para entrar a Azure ML Studio.
+
+---
+
+## 🔹 2. Creación del entorno de cómputo
+
+1. Dentro de Azure ML Studio, fui a la sección **“Compute”**.
+2. Seleccioné **"Compute Instances"** y creé una nueva con:
+   - **Tipo de máquina**: _CPU (2 núcleos)_
+   - **Plan de bajo costo**: _La opción más económica disponible_
+   - Dejé la configuración predeterminada.
+3. Esperé a que la instancia se activara correctamente (estado: *Running*).
+
+---
+
+## 🔹 3. Ejecución del entrenamiento automatizado (AutoML)
+
+1. Fui al módulo de **"Automated ML"** y seleccioné **“New Automated ML run”**.
+2. Asigné un **nombre al experimento**.
+3. En la sección de datos:
+   - Seleccioné **“+ Create dataset”**
+   - Elegí la opción **“From local files”**
+   - Subí un archivo CSV con datos de ejemplo proporcionados.
+   - Dejé todas las configuraciones predeterminadas.
+4. Seleccioné como columna objetivo la variable `target` ya que es una variable categórica (clasificación).
+5. Elegí la tarea de **Clasificación**.
+6. En la configuración de validación:
+   - Dejé activado el método **automático** para separar los datos en entrenamiento y prueba.
+7. En la sección de cómputo:
+   - Seleccioné la **máquina virtual creada previamente** (Compute Instance).
+
+---
+
+## 🔹 4. Resultado del experimento
+
+Una vez completado el entrenamiento, el sistema mostró el resumen del **mejor modelo encontrado**:
+
+- **Algoritmo aplicado**:  
+  `MaxAbsScaler + ExtremeRandomTrees`
+  
+- **Métrica principal (AUC ponderado)**:  
+  `1.00000` (indica una excelente capacidad de clasificación)
+
+- **Otros detalles:**
+  - Muestreo: 100%
+  - No se ha desplegado como API aún
+  - Aún no se ha registrado oficialmente el modelo
+
+---
+
+## 🔹 5. Observaciones
+
+- El proceso no arrojó errores y finalizó con éxito.
+- El modelo mostró un rendimiento perfecto sobre los datos cargados.
+- Todavía se puede:
+  - Probar el modelo con nuevos datos
+  - Desplegar el modelo como un servicio web (API)
+  - Descargar el modelo o exportar el código generado automáticamente
